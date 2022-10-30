@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         etBrand = findViewById(R.id.brand);
         btnExportAsCSV = findViewById(R.id.export_as_CSV);
         onTextChange(etPolicy,etProductCategory,etOriginCategory,etBrand);
-        onClicker();
+
     }
     private void onTextChange(EditText... editTexts) {
         for(EditText et:editTexts){
@@ -39,6 +39,18 @@ public class MainActivity extends AppCompatActivity {
                 public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                     if (ifEditTextsNotEmpty(editTexts)) {
                         btnExportAsCSV.getBackground().setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_ATOP);
+                        btnExportAsCSV.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(MainActivity.this,MainActivity2.class);
+                                Integer numberOne = Integer.parseInt(etPolicy.getText().toString()) + Integer.parseInt(etProductCategory.getText().toString());
+                                String text2 = numberOne.toString();
+                                String text1 = etOriginCategory.getText().toString() +" "+ etBrand.getText().toString();
+                                intent.putExtra("Miku",text1);
+                                intent.putExtra("Miku2",text2);
+                                startActivity(intent);
+                            }
+                        });
                     }else{
                         btnExportAsCSV.getBackground().setColorFilter(getResources().getColor(R.color.gray), PorterDuff.Mode.SRC_ATOP);
                     }
@@ -59,19 +71,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-    public void onClicker(){
-btnExportAsCSV.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        Intent intent = new Intent(MainActivity.this,MainActivity2.class);
-        Integer numberOne = Integer.parseInt(etPolicy.getText().toString()) + Integer.parseInt(etProductCategory.getText().toString());
-        String text2 = numberOne.toString();
-        String text1 = etOriginCategory.getText().toString() + etBrand.getText().toString();
-        intent.putExtra("Miku",text1);
-        intent.putExtra("Miku2",text2);
-        startActivity(intent);
-    }
-});
-    }
+
 }
 
